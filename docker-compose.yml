@@ -1,0 +1,74 @@
+version: "3.1"
+
+services:
+  php:
+    container_name: ${PROJECT_NAME}_php
+    image: ghcr.io/gedgin/php:${PHP_VERSION}${PHP_VERSION_SUFFIX}
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./php${PHP_VERSION}${PHP_VERSION_SUFFIX}/conf:/usr/local/etc/php/conf.d
+      - ${PROJECT_BASE_DIR}:${HTDOCS_DIR}
+    networks:
+      - nw1
+
+  nodejs:
+    container_name: ${PROJECT_NAME}_nodejs
+    image: ghcr.io/gedgin/nodejs:latest
+    ports:
+      - "8088:80"
+      - "3000:3000"
+    volumes:
+      - ./nodejs/ssh:/home/docker/.ssh
+      - ${PROJECT_BASE_DIR}:/home/docker/src
+    networks:
+      - nw1
+
+ apache:
+   container_name: ${PROJECT_NAME}_apache
+   image: ghcr.io/gedgin/apache:latest
+   ports:
+     - "80:80"
+     - "443:443"
+   volumes:
+     - ./apache/conf/vhost.conf:/opt/docker/etc/httpd/vhost.conf
+     - ${PROJECT_BASE_DIR}:${HTDOCS_DIR}
+   environment:
+     - WEB_PHP_TIMEOUT=30
+   networks:
+     nw1:
+       aliases:
+         - ${DOMAIN_NAME}
+
+  mysql:
+    container_name: ${PROJECT_NAME}_mysql
+    image: ghcr.io/gedgin/mysql:5.7
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_db:/var/lib/mysql
+      - ./mysql/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    networks:
+      - nw1
+
+  workspace:
+    container_name: ${PROJECT_NAME}_workspace
+    image: ghcr.io/gedgin/workspace:${PHP_VERSION}
+    volumes:
+      - ./workspace${PHP_VERSION}/conf/php:/usr/local/etc/php/conf.d
+      - ./workspace${PHP_VERSION}/ssh:/home/docker/.ssh
+      - ${PROJECT_BASE_DIR}:${HTDOCS_DIR}
+    networks:
+      - nw1
+
+networks:
+  nw1:
+
+volumes:
+  mysql_db:
