@@ -1,0 +1,24 @@
+<VirtualHost *:80>
+  ServerName myproject.test
+#  ServerAlias myproject *.test
+  DocumentRoot "/var/www/localhost/htdocs/myproject"
+
+  UseCanonicalName Off
+
+  IncludeOptional /opt/docker/etc/httpd/vhost.common.d/*.conf
+</VirtualHost>
+
+<VirtualHost *:443>
+  ServerName myproject.test
+#  ServerAlias myproject *.test
+  DocumentRoot "/var/www/localhost/htdocs/myproject"
+
+  UseCanonicalName Off
+
+  LoadModule http2_module modules/mod_http2.so
+  Protocols h2 http/1.1
+
+  IncludeOptional /opt/docker/etc/httpd/vhost.common.d/*.conf
+
+  Include /opt/docker/etc/httpd/vhost.ssl.conf
+</VirtualHost>
