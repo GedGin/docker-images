@@ -12,17 +12,19 @@ services:
     networks:
       - nw1
 
-  nodejs:
-    container_name: ${PROJECT_NAME}_nodejs
-    image: ghcr.io/gedgin/nodejs:latest
+  node:
+    container_name: ${PROJECT_NAME}_node
+    image: ghcr.io/gedgin/node:20
     ports:
-      - "8088:80"
       - "3000:3000"
     volumes:
-      - ./nodejs/ssh:/home/docker/.ssh
-      - ${PROJECT_BASE_DIR}:/home/docker/src
+      - ./node/ssh:/home/docker/.ssh
+      - ${PROJECT_BASE_DIR}:${NODE_SRC_DIR}
     networks:
       - nw1
+    stdin_open: true
+    tty: true
+    working_dir: ${NODE_SRC_DIR}
 
  apache:
    container_name: ${PROJECT_NAME}_apache
