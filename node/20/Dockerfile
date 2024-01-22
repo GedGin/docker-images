@@ -13,6 +13,7 @@ RUN apt-get update \
   less \
   sudo \
   vim \
+  git \
   && apt-get clean
 
 # Add the NodeSource APT repository for Node.js 20.x

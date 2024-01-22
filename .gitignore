@@ -1,0 +1,2 @@
+node/ssh/*
+!node/ssh/.gitkeep
