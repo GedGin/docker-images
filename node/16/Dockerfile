@@ -15,13 +15,13 @@ RUN apt-get update \
   vim \
   && apt-get clean
 
-# Add the NodeSource APT repository for Node.js 20.x
+# Add the NodeSource APT repository for Node.js 16.x
 RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | sudo apt-key add -
 
 # Create the nodesource.list file
 RUN VERSION_CODENAME=$(lsb_release -sc) \
-    && echo "deb https://deb.nodesource.com/node_20.x $VERSION_CODENAME main" | sudo tee /etc/apt/sources.list.d/nodesource.list \
-    && echo "deb-src https://deb.nodesource.com/node_20.x $VERSION_CODENAME main" | sudo tee -a /etc/apt/sources.list.d/nodesource.list
+    && echo "deb https://deb.nodesource.com/node_16.x $VERSION_CODENAME main" | sudo tee /etc/apt/sources.list.d/nodesource.list \
+    && echo "deb-src https://deb.nodesource.com/node_16.x $VERSION_CODENAME main" | sudo tee -a /etc/apt/sources.list.d/nodesource.list
 
 # Install Node.js
 RUN apt-get update \

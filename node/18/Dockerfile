@@ -7,14 +7,24 @@ SHELL ["/bin/bash", "-c"]
 RUN apt-get update \
   && apt-get install -y \
   curl \
+  gnupg \
+  lsb-release \
   graphicsmagick \
   less \
   sudo \
   vim \
   && apt-get clean
 
+# Add the NodeSource APT repository for Node.js 18.x
+RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | sudo apt-key add -
+
+# Create the nodesource.list file
+RUN VERSION_CODENAME=$(lsb_release -sc) \
+    && echo "deb https://deb.nodesource.com/node_18.x $VERSION_CODENAME main" | sudo tee /etc/apt/sources.list.d/nodesource.list \
+    && echo "deb-src https://deb.nodesource.com/node_18.x $VERSION_CODENAME main" | sudo tee -a /etc/apt/sources.list.d/nodesource.list
+
 # Install Node.js
-RUN curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash - \
+RUN apt-get update \
   && apt-get install -y nodejs
 
 RUN useradd -d /home/docker -s /bin/bash docker \
