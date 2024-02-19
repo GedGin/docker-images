@@ -35,13 +35,13 @@ RUN export NVM_DIR="/usr/local/nvm" \
     && mkdir $NVM_DIR \
     && wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.39.0/install.sh | bash \
     && source $NVM_DIR/nvm.sh \
-    && nvm install 16 \
+    && nvm install 18 \
     && n=$(which node) \
     && n=${n%/bin/node} \
     && cp -r $n/{bin,lib,share} /usr/local \
     && nvm use system \
     && /usr/local/bin/npm i -g npm \
-    && nvm uninstall 16 \
+    && nvm uninstall 18 \
     && nvm cache clear
 
 RUN usermod -l docker -d /home/docker -s /bin/bash www-data \
