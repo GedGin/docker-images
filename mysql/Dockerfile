@@ -1,6 +1,6 @@
 FROM mysql:5.7
 
-LABEL maintainer="gin8 <gediminas.gineitis@gmail.com>"
+LABEL maintainer="gin8 <gin8@gin8.de>"
 
 COPY my.cnf /etc/mysql/conf.d/my.cnf
 COPY run.sh /run.sh

@@ -1,6 +1,6 @@
 FROM webdevops/apache:alpine
 
-LABEL maintainer="gin8 <gediminas.gineitis@gmail.com>"
+LABEL maintainer="gin8 <gin8@gin8.de>"
 
 ENV WEB_PHP_SOCKET=php:9000
 ENV WEB_DOCUMENT_ROOT=/var/www/localhost/htdocs

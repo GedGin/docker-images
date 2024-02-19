@@ -1,6 +1,6 @@
 FROM php:8.2-fpm
 
-LABEL maintainer="gin8 <gediminas.gineitis@gmail.com>"
+LABEL maintainer="gin8 <gin8@gin8.de>"
 
 WORKDIR /var/www/localhost/htdocs
 

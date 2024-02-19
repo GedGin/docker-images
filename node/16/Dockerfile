@@ -1,6 +1,6 @@
 FROM ubuntu:22.04
 
-LABEL maintainer="gin8 <gediminas.gineitis@gmail.com>"
+LABEL maintainer="gin8 <gin8@gin8.de>"
 
 SHELL ["/bin/bash", "-c"]
 
